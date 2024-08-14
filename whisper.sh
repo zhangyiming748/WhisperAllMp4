@@ -6,13 +6,11 @@ model_dir="/data"
 echo "root = ${root_dir}"
 echo "model_dir = ${model_dir}"
 # 遍历根目录及其子目录
-find "$root_dir" -type f -name "*.mp4" | while read file; do
+find "$root_dir" -type f -name "*.${pattern}" | while read file; do
     # 获取文件的绝对路径
     file_path=$(dirname "$file")
-    # 检查当前路径下是否存在扩展名为 srt 的文件
-    if ! find "$file_path" -type f -name "*.srt" | read; then
-        echo "$file_path"
-        # shellcheck disable=SC2154
-        whisper "$file_path" --model $model --language $language --model_dir $model_dir --output_format srt
-    fi
+    echo "file = ${file}" # file 就是文件的绝对路径
+    echo "file_path  = ${file_path}" # 纯文件夹绝对路径
+    echo "最终要执行的命令 = whisper "${file}" --model $model --language $language --model_dir $model_dir --output_format srt"
+    whisper "${file}" --model $model --language $language --model_dir $model_dir --output_format srt
 done
