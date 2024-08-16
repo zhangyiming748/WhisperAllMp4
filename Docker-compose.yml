@@ -9,3 +9,8 @@ services:
       - /data:/data
       - /model:/model
     image: zhangyiming748/whisper_all_mp4:latest
+    deploy:
+      resources:
+        limits:
+          cpus: '7.3'
+          memory: 7890M
